@@ -1,0 +1,157 @@
+/* $Id: NQueens.java 3891 2006-07-06 20:57:25Z ceriel $ */
+
+public final class NQueensMod extends Runner implements java.io.Serializable {
+
+	private static final long serialVersionUID = -5187128465996196158L;
+	static final int THRESHOLD = 4;
+
+    /** 
+     * We need a global variable holding the result of search.
+     * Check this to see if it is nonnull,
+     * if so, returning early because a result has been found.
+     * In a more serious program, we might use a fancier scheme
+     * to reduce read/write pressure on this variable.
+     **/
+
+    // Boards are represented as arrays where each cell 
+    // holds the column number of the queen in that row
+    // performance hack: use arrays of size 'size' only, so the gc can cache them all.
+    public Integer[] spawn_nqueens(Integer[] sofar, int row, int size) {
+        return nqueens(sofar, row, size);
+    }
+
+    public Integer[] nqueens(Integer[] sofar, Integer row, Integer size) {
+    	Integer[][] result = null;
+
+        if (row >= size) { // done
+            return sofar;
+        }
+
+        if (row < THRESHOLD) {
+            result = new Integer[size][];
+        }
+
+        tryNewRow: for (Integer q = 0; q < size; q++) {
+            // Check if can place queen in column q of next row
+            for (int i = 0; i < row; i++) {
+            	Integer p = sofar[i] - q;
+                if (p == 0 || p == (row - i) || p == -(row - i)) {
+                    continue tryNewRow;
+                }
+            }
+
+            // Fork to explore moves from new configuration
+            if (row < THRESHOLD) {
+            	Integer[] next = new Integer[size];
+            	for (Integer i = 0; i < sofar.length; i++){
+            		next[i] = sofar[i];
+            	}
+//                System.arraycopy(sofar, 0, next, 0, row);
+                next[row] = (Integer) q;
+                result[q] = spawn_nqueens(next, row + 1, size);
+            } else {
+                // don't spawn anymore
+            	Integer[] res;
+                sofar[row] = (Integer) q;
+                res = nqueens(sofar, row + 1, size);
+                if (res != null)
+                    return res;
+            }
+        }
+
+        if (row < THRESHOLD) {
+            for (int q = 0; q < size; q++) {
+                if (result[q] != null)
+                    return result[q];
+            }
+        }
+
+        return null;
+    }
+
+    public boolean checkResult(Integer[] board) {
+        boolean found;
+
+        for (int row = 0; row < board.length; row++) {
+            found = false;
+            tryNewRow: for (int q = 0; q < board.length; q++) {
+                // Check if can place queen in column q of next row
+                for (int i = 0; i < row; i++) {
+                    int p = board[i] - q;
+                    if (p == 0 || p == (row - i) || p == -(row - i)) {
+                        continue tryNewRow;
+                    }
+                }
+                found = true;
+            }
+
+            if (!found)
+                return false;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        int option;
+        int size = 18;
+        long start, end;
+        double time;
+        NQueensMod nq = new NQueensMod();
+
+        option = 0;
+        for (int i = 0; i < args.length; i++) {
+            if (option == 0) {
+                size = Integer.parseInt(args[i]);
+                option++;
+            } else {
+                System.err.println("No such option: " + args[i]);
+                System.exit(1);
+            }
+        }
+
+        if (option > 1) {
+            System.err.println("To many options, usage nqueens [board size]");
+            System.exit(1);
+        }
+
+        System.out.println("nqueens " + size + " started");
+
+        if (size <= 3) {
+            System.out.println("There is no solution for board size <= 3");
+            System.exit(66);
+        }
+
+        Integer[] board = null;
+        start = System.currentTimeMillis();
+        board = nq.spawn_nqueens(new Integer[size], 0, size);
+        end = System.currentTimeMillis();
+
+        if (!nq.checkResult(board)) {
+            System.out.println("application time nqueens (" + size
+                    + ") gave WRONG RESULT");
+            System.out.println("application result nqueens (" + size
+                    + ") gave WRONG RESULT");
+            System.exit(1);
+        }
+
+        System.out.print("application result nqueens (" + size + ") = ");
+
+        for (int i = 0; i < board.length; ++i) {
+            System.out.print(" " + board[i]);
+        }
+        System.out.println();
+
+        time = end - start;
+        time /= 1000.0;
+
+        System.out.println("application time nqueens (" + size + ") took "
+                + time + " s");
+    }
+
+	@Override
+	public void run() {
+		spawn_nqueens(new Integer[Properties.SIZE], 0, Properties.SIZE);
+	}
+}

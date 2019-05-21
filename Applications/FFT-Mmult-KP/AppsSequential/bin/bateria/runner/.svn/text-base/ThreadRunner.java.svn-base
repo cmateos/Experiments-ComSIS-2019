@@ -1,0 +1,37 @@
+package edu.runner;
+
+import edu.log.Logger;
+
+public class ThreadRunner implements Runner, Runnable {
+
+	private Thread t;
+	private Runner runner;
+	
+	public ThreadRunner(Runner r){
+		t = new Thread(this,"ThreadRunner");
+		this.runner=r;
+	}
+	@Override
+	public void run() {
+		try{
+			this.runner.execute();
+		}
+		catch(Exception e){
+			Logger.getLogger().log("ThreadRunner error: "+e.toString());
+		}
+		this.onFinish();
+	}
+
+	@Override
+	public void execute() {
+		t.start();
+	}
+
+	public Thread getThread(){
+		return t;
+	}
+	
+	public void onFinish(){
+		
+	}
+}

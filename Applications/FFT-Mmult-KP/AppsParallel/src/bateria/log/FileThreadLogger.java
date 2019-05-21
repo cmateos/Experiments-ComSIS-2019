@@ -1,0 +1,64 @@
+package bateria.log;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FileThreadLogger extends Logger implements Runnable{
+	private List<String> logs;
+	private BufferedWriter writer;
+	private String file;
+	
+	public FileThreadLogger(String file) throws FileNotFoundException{
+		this(file,false);
+	}
+	
+	public FileThreadLogger(String file,boolean append) throws FileNotFoundException{
+		this.file = file;
+		this.logs = new ArrayList<String>();
+		this.writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,append)));
+		Thread t=new Thread(this);
+		t.setDaemon(true);
+		t.start();
+		this.log("===========================");
+	}
+	@Override
+	public synchronized void log(String data) {
+		logs.add(Long.toString(System.currentTimeMillis())+"; "+data);
+		this.notifyAll();
+	}
+
+	
+	public void run() {
+		while(true){
+			String message = null;
+			synchronized (this){
+				while(this.logs.size()==0){
+					try {
+						this.wait();
+					} catch (InterruptedException e) {
+						//Nothing should happen
+						e.printStackTrace();
+					}
+				}
+				message = this.logs.remove(0)+"\n";
+			}
+			try {
+				this.writer.append(message);
+				this.writer.flush();
+			} catch (Exception e) {
+				try {
+					this.writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true)));
+					this.logs.add(0, message);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					throw new RuntimeException(e1);
+				}
+			}
+		}
+	}
+
+}

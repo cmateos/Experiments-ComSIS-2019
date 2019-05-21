@@ -1,0 +1,21 @@
+This folder contains the directory structure and necessary files to run and measure micro-benchmark performance.
+First, a Caliper-ready micro-benchmark (both a lighter and a heavy version) should be placed under the "src" folder. 
+Micro-benchmarks should be compiled by running ./compile.sh (please make sure Java is installed).
+
+To measure micro-benchmark performance: 
+- Open a terminal in this folder
+- Run:
+	"sudo ./runClass.sh caliper.stringConcatenation.ECaliper_StringBuilder" o
+	"sudo ./runClass.sh caliper.stringConcatenation.ECaliper_StringConcatenation"
+
+The script will generate a log in this folder with the following columns:
+
+- Voltage[V]
+- Current[A]
+- Active power[W]
+- Apparent power[VA]
+- Power factor
+- Energy[KWh]
+
+The source code of the software (implemented in C) to talk to the Power Meter equipment is also provided (pmRead.cpp). 
+It has been compiled using gcc into a.out for convenience purposes.

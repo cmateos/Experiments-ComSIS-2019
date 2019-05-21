@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	        
+	<RelativeLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/relativeLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="1996dp" >
+
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:text="@string/ejecuciones"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <EditText
+	        android:id="@+id/cant"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="40dp"
+	        android:layout_toRightOf="@+id/textView1"
+	        android:inputType="number"
+	        android:text="@string/cant" >
+
+	        <requestFocus />
+	    </EditText>
+
+	    <Button
+	        android:id="@+id/fft"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignRight="@+id/textView1"
+	        android:layout_below="@+id/cant"
+	        android:layout_marginTop="17dp"
+	        android:text="@string/fft" />
+
+	    <Button
+	        android:id="@+id/FftMod"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/fft"
+	        android:layout_alignBottom="@+id/fft"
+	        android:layout_marginLeft="25dp"
+	        android:layout_toRightOf="@+id/fft"
+	        android:text="@string/fftMod" />
+
+	    <Button
+	        android:id="@+id/Knapsack"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignRight="@+id/fft"
+	        android:layout_below="@+id/fft"
+	        android:layout_marginTop="19dp"
+	        android:text="@string/knapsack" />
+
+	    <Button
+	        android:id="@+id/KnapsackMod"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/Knapsack"
+	        android:layout_alignBottom="@+id/Knapsack"
+	        android:layout_alignLeft="@+id/FftMod"
+	        android:text="@string/knapsackMod" />
+
+	    <Button
+	        android:id="@+id/Mmult"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignRight="@+id/Knapsack"
+	        android:layout_below="@+id/Knapsack"
+	        android:layout_marginTop="15dp"
+	        android:text="@string/mmult" />
+	    
+	    <Button
+	        android:id="@+id/MmultMod"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/Mmult"
+	        android:layout_alignBottom="@+id/Mmult"
+	        android:layout_alignLeft="@+id/FftMod"
+	        android:text="@string/mmultMod" >
+	    </Button>
+</RelativeLayout>
+
+</ScrollView>

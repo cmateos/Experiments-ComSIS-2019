@@ -1,0 +1,24 @@
+package edu.log;
+
+public abstract class Logger {
+	
+	private static Logger LOGGER = new Logger(){
+
+		@Override
+		public void log(String data) {
+			System.out.println(data);
+		}
+		
+	};
+	
+	public static Logger getLogger(){
+		return LOGGER;
+	}
+	
+	public static void setLogger(Logger logger){
+		LOGGER=logger;
+	}
+	
+	public abstract void log(String data);
+	
+}

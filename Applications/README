@@ -1,0 +1,10 @@
+This folder contains the file necessary to run and measure the scientific applications tested.
+Each directory contains the source code and binary codes (.class) of the improved and original versions of the applications. 
+Moreover, several scripts are provided: 
+
+runApps.sh -> Executes and measure elapsed time and energy consumption of applications
+processOutput.sh -> Moves results from previous the previous step from plain logs to tabular data
+cleanOutput.sh -> Removes produced output
+buildEnergyResults.sh -> Creates paper-ready data
+fixEnergyFile.sh -> Detects outliers (Power Meter measurement errors)
+mann-whitney-energy.sh -> Builds significance test output. It is a wrapper to a Python script

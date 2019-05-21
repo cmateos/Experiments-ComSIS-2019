@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, AppsActivity!</string>
+    <string name="app_name">Apps</string>
+    <string name="ejecuciones">Ejecuciones</string>
+    <string name="cant">150000</string>
+    <string name="fft">Fft</string>
+    <string name="fftMod">fft Mod</string>
+    <string name="knapsack">Knapsack</string>
+    <string name="knapsackMod">KnapsackMod</string>
+    <string name="mmult">Mmult</string>
+    <string name="mmultMod">MmultMod</string>
+
+</resources>
